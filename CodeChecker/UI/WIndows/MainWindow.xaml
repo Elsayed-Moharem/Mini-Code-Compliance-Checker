@@ -1,0 +1,1071 @@
+﻿<Window x:Class="CodeChecker.UI.WIndows.MainWindow"
+    	        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodel="clr-namespace:CodeChecker.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+        mc:Ignorable="d"
+				WindowStartupLocation="CenterOwner"
+				 MinHeight="600" MinWidth="700" Height="600" Width="700" Style="{DynamicResource CustomWindowStyle}"
+				ResizeMode="CanResize"
+				Closed="MainWindowClose"
+                   Title="CODE CHECKER"       >
+
+    <Window.Resources>
+        <ResourceDictionary Source="..\Styles\LocalStyle.xaml" />
+
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="673*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition  Height="30" ></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <TabControl  TabStripPlacement="Left" Margin="3,5,3,3" BorderThickness="2" Background="#EBEBEB" Grid.ColumnSpan="3" Grid.Row="0" >
+            <TabItem Margin=" 0 -4 0 0 "  Height="50" Style="{DynamicResource VerticalTabItem}" IsEnabled="False"  />
+
+            <TabItem Style="{DynamicResource VerticalTabItem}" Header="Structure" IsSelected="True" >
+
+                <TabControl  Background="#EBEBEB" >
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}"  IsEnabled="False" Header="Choose :" ></TabItem>
+
+                    <!--#region Column -->
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Columns" IsSelected="True" >
+                        <DockPanel LastChildFill="True">
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                </Grid.RowDefinitions>
+
+
+                                <Label Grid.Row="1" Grid.Column="0" Content="Min Dimension" />
+
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Dim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <Button Grid.Row="2" Grid.Column="1" Height="25" Command="{Binding CheckStrColCommand}" Content=" Check " />
+
+
+
+                            </Grid>
+
+
+
+                            <TabControl>
+                                <TabItem Header="Missed Columns">
+                                    <DockPanel>
+
+                                        <Button
+                             Height="25"
+                             Margin="5"
+                             HorizontalAlignment="Right"
+                             Command="{Binding ExportCommand}"
+                             CommandParameter="Columnssparameter"
+                             Content="Export To Excel"
+                             DockPanel.Dock="Bottom" />
+
+                                        <!--<DataGrid MinRowHeight="20" AutoGenerateColumns="True" ItemsSource="{Binding StrColumnsList}"></DataGrid>-->
+                                        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding StrColumnsList}" Width="auto">
+                                            <DataGrid.Columns >
+                                                <DataGridTemplateColumn Header="Id" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding Id}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="Width" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding StrColumnsWidth}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="Length" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding StrColumnsLength}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+
+
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+                            </TabControl>
+
+
+                        </DockPanel>
+                    </TabItem>
+                    <!--#endregion-->
+
+                    <!--#region Footing -->
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Footing" >
+                        <DockPanel LastChildFill="True">
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                </Grid.RowDefinitions>
+
+
+                                <Label Grid.Row="1" Grid.Column="0" Content="Min Width" />
+
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FootingWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Grid.Row="2" Grid.Column="0" Content="Min Length" />
+
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FootingLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Grid.Row="3" Grid.Column="0" Content="Min Thickness" />
+
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FootingThickness,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <Button Grid.Row="4" Grid.Column="1" Height="25" Command="{Binding CheckFootingCommand}" Content=" Check " />
+
+
+
+                            </Grid>
+
+
+                            <TabControl>
+                                <TabItem Header="Missed Footing">
+                                    <DockPanel>
+
+                                        <Button
+                             Height="25"
+                             Margin="5"
+                             HorizontalAlignment="Right"
+                             Command="{Binding ExportCommand}"
+                             CommandParameter="Footingparameter"
+                             Content="Export To Excel"
+                             DockPanel.Dock="Bottom" />
+
+                                        <!--<DataGrid MinRowHeight="20" AutoGenerateColumns="True" ItemsSource="{Binding StrColumnsList}"></DataGrid>-->
+                                        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding StrFootingList}" Width="auto">
+                                            <DataGrid.Columns >
+                                                <DataGridTemplateColumn Header="Id" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding Id}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="Width" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding StrFootingWidth}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="Length" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding StrFootingLength}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Header="Thickness" Width="*">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ContentControl Content="{Binding StrFootingThickness}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+
+
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+                            </TabControl>
+
+
+                        </DockPanel>
+
+                    </TabItem>
+                    <!--#endregion-->
+
+                </TabControl>
+
+
+            </TabItem>
+
+
+
+
+            <TabItem Style="{DynamicResource VerticalTabItem}"  Header="Architecture">
+                <TabControl Background="#EBEBEB" >
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}"  IsEnabled="False" Header="Choose :" ></TabItem>
+
+
+                    <!--#region specification Rooms Function  -->
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Rooms" IsSelected="True" >
+
+                        <StackPanel Orientation="Horizontal">
+
+
+
+                            <StackPanel Width="300">
+
+                                <Label>select Residential Rooms</Label>
+
+                                <ListBox ItemsSource="{Binding AllRoomsDes}">
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding RoomName}" IsChecked="{Binding ISResidentialRoom, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                </ListBox>
+
+                            </StackPanel>
+
+                            <StackPanel Width="300">
+
+                                <Label>select kitchen Rooms</Label>
+
+                                <ListBox ItemsSource="{Binding AllRoomsDes}">
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding RoomName}" IsChecked="{Binding IsKitchen, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                </ListBox>
+
+                            </StackPanel>
+
+
+                        </StackPanel>
+                    </TabItem>
+                    <!--#endregion-->
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Windows" >
+                        <TabControl Background="#EBEBEB" >
+                            <TabItem  Style="{DynamicResource HorizontalTabItem}" IsSelected="True" Header="Check Sill Height" >
+
+
+                                <DockPanel LastChildFill="True">
+
+                                    <Grid Margin="5" DockPanel.Dock="Top">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="210*" />
+                                            <ColumnDefinition Width="101*"/>
+                                            <ColumnDefinition Width="311*" />
+
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2" />
+                                            <RowDefinition Height="32" />
+                                            <RowDefinition Height="32" />
+                                        </Grid.RowDefinitions>
+
+
+                                        <Label
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="Min Sill height in (MM)" Grid.ColumnSpan="2" />
+
+                                        <TextBox
+   
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="{Binding MiniSillDim ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        <Button
+                                   Grid.Row="2"
+                                   Grid.Column="2"
+                                   Height="25"
+                                   Command="{Binding CheckSillHeight}"
+                                   Content=" Check Sill Height " Margin="0,4,0,4" />
+
+
+
+                                    </Grid>
+
+                                   
+                                    <!-- Not Ended-->
+                                    <TabControl>
+                                        <TabItem Header="Window ID">
+                                            <DockPanel>
+
+                                                <Button
+                                           Height="25"
+                                           Margin="5"
+                                           HorizontalAlignment="Right"
+                                           Command="{Binding ExportCommand}"
+                                           CommandParameter="Sillparameter"
+                                           Content="Export To Excel"
+                                           DockPanel.Dock="Bottom" />
+                                                <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                                    <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding WindowFallInSillHeight ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </ScrollViewer>
+
+
+                                            </DockPanel>
+
+
+                                        </TabItem>
+
+                                    </TabControl>
+
+
+                                </DockPanel>
+
+
+
+
+
+
+                            </TabItem>
+                            <TabItem  Style="{DynamicResource HorizontalTabItem}"   Header="Check Net Area Of Window" >
+
+                                <DockPanel LastChildFill="True">
+
+                                    <Grid Margin="5" DockPanel.Dock="Top">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="210*" />
+                                            <ColumnDefinition Width="101*"/>
+                                            <ColumnDefinition Width="49*" />
+                                            <ColumnDefinition Width="262*"/>
+
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2" />
+                                            <RowDefinition Height="32" />
+                                            <RowDefinition Height="32" />
+                                        </Grid.RowDefinitions>
+
+
+                                        <Label
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="Min Window Net Area (M^2)" Grid.ColumnSpan="2" />
+
+                                        <TextBox
+   
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="{Binding MiniWindowNetArea ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
+
+                                        <Button
+                                   Grid.Row="2"
+                                   Grid.Column="2"
+                                   Height="25"
+                                   Command="{Binding CheckNetArea}"
+                                   Content=" Check Net Area " Margin="0,4,0,3" Grid.ColumnSpan="2" />
+
+
+
+                                    </Grid>
+
+                                   
+                                    <!-- Not Ended-->
+                                    <TabControl>
+                                        <TabItem Header="Window ID">
+                                            <DockPanel>
+
+                                                <Button
+                                           Height="25"
+                                           Margin="5"
+                                           HorizontalAlignment="Right"
+                                           Command="{Binding ExportCommand}"
+                                           CommandParameter="NetAreaparameter"
+                                           Content="Export To Excel"
+                                           DockPanel.Dock="Bottom" />
+                                                <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                                    <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding WindowFallInNetArea ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </ScrollViewer>
+
+
+                                            </DockPanel>
+
+
+                                        </TabItem>
+
+                                    </TabControl>
+
+
+                                </DockPanel>
+
+
+
+
+
+
+
+                            </TabItem>
+                            <TabItem  Style="{DynamicResource HorizontalTabItem}"   Header="Check Of Total Area " >
+
+                                <DockPanel LastChildFill="True">
+
+                                    <Grid Margin="5" DockPanel.Dock="Top">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="210*" />
+                                            <ColumnDefinition Width="101*"/>
+                                            <ColumnDefinition Width="49*" />
+                                            <ColumnDefinition Width="262*"/>
+
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2" />
+                                            <RowDefinition Height="32" />
+                                            <RowDefinition Height="32" />
+                                        </Grid.RowDefinitions>
+
+
+                                        <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Content="Percent of Windows Refer To Room" Grid.ColumnSpan="2" />
+
+                                        <TextBox
+   
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="{Binding MiniRoomTotalArea ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" />
+
+                                        <Button
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Height="25"
+                                    Command="{Binding CheckTotalArea}"
+                                    Content=" Check Total Area " Margin="0,4,0,3" Grid.ColumnSpan="2" />
+
+
+
+                                    </Grid>
+
+                                    <!-- Not Ended-->
+                                    <TabControl>
+                                        <TabItem Header="Window ID">
+                                            <DockPanel>
+
+                                                <Button
+                                            Height="25"
+                                            Margin="5"
+                                            HorizontalAlignment="Right"
+                                            Command="{Binding ExportCommand}"
+                                            CommandParameter="TotalAreaparameter"
+                                            Content="Export To Excel"
+                                            DockPanel.Dock="Bottom" />
+                                                <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                                    <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding WindowFallInTotalArea ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </ScrollViewer>
+
+
+                                            </DockPanel>
+
+
+                                        </TabItem>
+
+                                    </TabControl>
+
+
+                                </DockPanel>
+
+
+
+
+
+
+                            </TabItem>
+                        </TabControl>
+                    </TabItem>
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Doors" >
+
+
+                        <DockPanel >
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+
+                                </Grid.RowDefinitions>
+
+
+                                <Label
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Content="Min Width Width Residential  " />
+
+                                <TextBox
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding MiniWidthLiving,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <Label
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Content="Min Width Width Services" />
+
+                                <TextBox
+               Grid.Row="1"
+               Grid.Column="1"
+               Text="{Binding MiniWidthService,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+
+
+
+
+                                <Button
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           Height="25"
+                           Command="{Binding CheckDoorWidth}"
+                           Content="Check Door Width" />
+
+
+                            </Grid>
+
+                            <TabControl>
+                                <TabItem Header="Door ID">
+                                    <DockPanel>
+
+                                        <Button
+                                     Height="25"
+                                     Margin="5"
+                                     HorizontalAlignment="Right"
+                                     Command="{Binding ExportCommand}"
+                                     CommandParameter="doorparameter"
+                                     Content="Export To Excel"
+                                     DockPanel.Dock="Bottom" />
+                                        <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding DoorFallInWidth ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ScrollViewer>
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+
+                            </TabControl>
+
+
+                        </DockPanel>
+
+
+
+
+
+                    </TabItem>
+
+                    <!--#region Shafts -->
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Shaft" >
+
+
+                        <DockPanel >
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                </Grid.RowDefinitions>
+
+
+                                <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Content="Min Area For Residential  " />
+
+                                <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{Binding MinAreaForResidential,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="Min Area For Services" />
+
+                                <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding MinAreaForServices,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Content="Min Dim For Residential" />
+
+                                <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="{Binding MinDimForResidential,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Content="Min Dim For Services"/>
+
+                                <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="{Binding MinDimForServices,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <Button 
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Height="25"
+                        Command="{Binding CheckCommand}"
+                        Content="Done" />
+
+
+
+
+
+
+
+
+
+
+
+
+                            </Grid>
+
+                            <TabControl>
+                                <TabItem Header="Shafts not pass Area">
+                                    <DockPanel LastChildFill="True">
+
+                                        <Button
+                                Height="25"
+                                Margin="5"
+                                HorizontalAlignment="Right"
+                                Command="{Binding ExportCommand}"
+                                CommandParameter="Shaftareaparameter"
+                                Content="Export To Excel"
+                                DockPanel.Dock="Bottom" />
+                                        <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ShaftsDesFailArea ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                        </ScrollViewer>
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+                                <TabItem Header="Shafts Not pass Dim">
+
+                                    <DockPanel>
+
+                                        <Button
+                                Width="80"
+                                Height="20"
+                                Margin="10 10 50 10"
+                                HorizontalAlignment="Right"
+                                Command="{Binding ExportCommand}"
+                                CommandParameter="shaftdimparameter"
+                                Content="Export 2 Excel"
+                                DockPanel.Dock="Bottom" />
+                                        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ShaftsDesFailDim ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    </DockPanel>
+
+
+
+                                </TabItem>
+                            </TabControl>
+
+
+                        </DockPanel>
+
+
+                    </TabItem>
+                    <!--#endregion-->
+                    
+                    <!--#region CheckClearHeight -->
+
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Height" >
+
+
+
+                        <DockPanel LastChildFill="True">
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                </Grid.RowDefinitions>
+
+
+                                <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="Min Clear height" />
+
+                                <TextBox
+                       
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding MinClearHeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <Button
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Height="25"
+                        Command="{Binding DoneCommand}"
+                        Content=" Check " />
+
+
+
+                            </Grid>
+
+
+
+                            <TabControl>
+                                <TabItem Header="Rooms Des">
+                                    <DockPanel>
+
+                                        <Button
+                                Height="25"
+                                Margin="5"
+                                HorizontalAlignment="Right"
+                                Command="{Binding ExportCommand}"
+                                CommandParameter="Roomsparameter"
+                                Content="Export To Excel"
+                                DockPanel.Dock="Bottom" />
+                                        <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding RoomsDes ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ScrollViewer>
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+                                <TabItem Header="Model Curve Des">
+
+                                    <DockPanel>
+
+                                        <Button
+                                Width="80"
+                                Height="20"
+                                Margin="10 10 50 10"
+                                HorizontalAlignment="Right"
+                                Command="{Binding ExportCommand}"
+                                CommandParameter="Curvesparameter"
+                                Content="Export To Excel"
+                                DockPanel.Dock="Bottom" />
+                                        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ModelCurveDes ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    </DockPanel>
+
+
+
+                                </TabItem>
+                            </TabControl>
+
+
+                        </DockPanel>
+
+
+                    </TabItem>
+                    <!--#endregion-->
+
+                    <!--#region CheckRoomDim -->
+
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Space Dim" >
+
+                        <DockPanel LastChildFill="True">
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+
+                                </Grid.RowDefinitions>
+
+
+                                <Label
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="Min Residental Room Dim" />
+
+                                <Label
+                                   Grid.Row="2"
+                                   Grid.Column="0"
+                                   Content="Min Kitchen Room Dim" />
+
+                                <Label
+                                   Grid.Row="3"
+                                   Grid.Column="0"
+                                   Content="Min Bathroom Room Dim" />
+
+
+                                <TextBox
+    
+                                  Grid.Row="1"
+                                  Grid.Column="1"
+                                  Text="{Binding MinRoomDimForResidential,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+    
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  Text="{Binding MinRoomDimForKitchen,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                <TextBox
+    
+                                  Grid.Row="3"
+                                  Grid.Column="1"
+                                  Text="{Binding MinRoomDimForBathroom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <Button
+                                  Grid.Row="4"
+                                  Grid.Column="1"
+                                  Height="25"
+                                  Command="{Binding CheckRoomDimCommand}"
+                                  Content=" Check " />
+
+
+
+                            </Grid>
+
+
+                            <TabControl>
+                                <TabItem Header="Rooms With Dim Less Than Min Dim">
+                                    <DockPanel>
+
+                                        <Button
+                                           Height="25"
+                                           Margin="5"
+                                           HorizontalAlignment="Right"
+                                           Command="{Binding ExportCommand}"
+                                           CommandParameter="RoomsWFailedDimparameter"
+                                           Content="Export To Excel"
+                                           DockPanel.Dock="Bottom" />
+                                        <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding RoomsDesWFailDim ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ScrollViewer>
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+
+                            </TabControl>
+
+
+                        </DockPanel>
+
+
+                    </TabItem>
+                    <!--#endregion-->
+
+                    <!--#region CheckRoomArea -->
+
+
+                    <TabItem  Style="{DynamicResource HorizontalTabItem}" Header="Space Area" >
+
+                        <DockPanel LastChildFill="True">
+
+                            <Grid Margin="5" DockPanel.Dock="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+
+                                </Grid.RowDefinitions>
+
+
+                                <Label
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Content="Min Residental Room Area" />
+
+                                <Label
+                                  Grid.Row="2"
+                                  Grid.Column="0"
+                                  Content="Min Kitchen Room Area" />
+
+                                <Label
+                                  Grid.Row="3"
+                                  Grid.Column="0"
+                                  Content="Min Bathroom Room Area" />
+
+
+                                <TextBox
+   
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding MinRoomAreaForResidential,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <TextBox
+   
+                                 Grid.Row="2"
+                                 Grid.Column="1"
+                                 Text="{Binding MinRoomAreaForKitchen,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <TextBox
+   
+                                 Grid.Row="3"
+                                 Grid.Column="1"
+                                 Text="{Binding MinRoomAreaForBathroom,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <Button
+                                 Grid.Row="4"
+                                 Grid.Column="1"
+                                 Height="25"
+                                 Command="{Binding CheckRoomAreaCommand}"
+                                 Content=" Check " />
+
+
+
+                            </Grid>
+
+
+                            <TabControl>
+                                <TabItem Header="Rooms With Area Less Than Min Area">
+                                    <DockPanel>
+
+                                        <Button
+                                          Height="25"
+                                          Margin="5"
+                                          HorizontalAlignment="Right"
+                                          Command="{Binding ExportCommand}"
+                                          CommandParameter="RoomsWFailedAreaparameter"
+                                          Content="Export To Excel"
+                                          DockPanel.Dock="Bottom" />
+                                        <ScrollViewer FlowDirection="RightToLeft"  Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True" Style="{DynamicResource FavsScrollViewer}" >
+
+                                            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding RoomsDesWFailArea ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </ScrollViewer>
+
+
+                                    </DockPanel>
+
+
+                                </TabItem>
+
+                            </TabControl>
+
+
+                        </DockPanel>
+
+
+                    </TabItem>
+                    <!--#endregion-->
+
+
+                </TabControl>
+
+            </TabItem>
+        </TabControl>
+
+        <DockPanel Margin="20 0 0 0"   Grid.Column="2"  Grid.Row="1">
+            <Label  DockPanel.Dock="Left"  Width="100">Status :</Label>
+            <Border
+              Height="28"
+              BorderThickness="2"
+              DockPanel.Dock="Top"
+              ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                <TextBlock Text="{Binding Result,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            </Border>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name> Code Checker</Name>
+    <Assembly>CodeChecker.dll</Assembly>
+    <AddInId>70CA926E-E281-46CD-9FE2-973074554F8D</AddInId>
+    <FullClassName>CodeChecker.Application</FullClassName>
+	  <Text>ITI_CodeChecker</Text>
+    <VendorId>ITI_CodeChecker_Team</VendorId>
+    <VendorDescription>ITI_CodeChecker_Team_Revit_addin</VendorDescription>
+	  <VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
+  </AddIn>
+</RevitAddIns>
+
+
+
+
