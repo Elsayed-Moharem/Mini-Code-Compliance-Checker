@@ -11,8 +11,8 @@ Welcome to the Autodesk Revit Add-in repository for inspecting architectural and
 ## Team
 
 - **Mahmoud Magdy**: AEC Developer
-- **Elsayed**: AEC Developer
-- **Karim**: AEC Developer
+- **Elsayed Moharem**: AEC Developer
+- **Karim AbdelRazik**: AEC Developer
 - **Mahmoud Omar**: AEC Developer
 
 ## Getting Started
